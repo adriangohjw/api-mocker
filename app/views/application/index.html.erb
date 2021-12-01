@@ -1,0 +1,27 @@
+<div class="container">
+  <h1>API Mocker</h1>
+  <% if flash.notice %>
+    <div class="alert alert-danger" role="alert">
+      <%= flash.notice %>
+    </div>
+  <% end %>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Content</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @api_contents.each do |api_content| %>
+        <tr>
+          <th scope="row"><%= api_content.id %></th>
+          <td><%= api_content.title %></td>
+          <td><%= api_content.content %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
