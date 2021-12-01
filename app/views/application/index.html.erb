@@ -5,6 +5,12 @@
     var pretty = JSON.stringify(obj, undefined, 4);
     document.getElementById('content').value = pretty;
   }
+
+  function copyToClipboard(string) {
+    console.log(string);
+    navigator.clipboard.writeText(string);
+    alert("Copied the text: \n" + string);
+  }
 </script>
 
 <div class="container">
@@ -38,6 +44,7 @@
         <th scope="col">#</th>
         <th scope="col">Title</th>
         <th scope="col">Content</th>
+        <th scope="col">Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -46,6 +53,10 @@
           <th scope="row"><%= api_content.id %></th>
           <td><%= api_content.title %></td>
           <td><%= api_content.content %></td>
+          <td>
+            <%= link_to 'Open link', all_public_show_path(id: api_content.id), target: '_blank' %>
+            <%= link_to 'Copy link', 'javascript:;', onclick: "copyToClipboard('#{all_public_show_url(id: api_content.id)}')" %>
+          </td>
         </tr>
       <% end %>
     </tbody>
