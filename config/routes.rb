@@ -3,5 +3,5 @@ Rails.application.routes.draw do
   root 'application#index'
   get '/', to: 'application#index'
   post '/api_content/create', to: 'api_content#create'
-  get '/all/public/:id', to: 'application#show'
+  get '/all/public/:id', to: 'api_content#show'
 end

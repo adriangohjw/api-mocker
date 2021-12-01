@@ -3,6 +3,11 @@
 require 'json'
 
 class ApiContentController < ActionController::Base
+  def show
+    @api_content = ApiContent.find(params[:id])
+    render json: @api_content.content
+  end
+
   def create
     api_content = ApiContent.new(
       title: create_params[:title],
