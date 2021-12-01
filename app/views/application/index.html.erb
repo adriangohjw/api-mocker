@@ -1,3 +1,12 @@
+<script>
+  function prettyPrint() {
+    var ugly = document.getElementById('content').value;
+    var obj = JSON.parse(ugly);
+    var pretty = JSON.stringify(obj, undefined, 4);
+    document.getElementById('content').value = pretty;
+  }
+</script>
+
 <div class="container">
   <h1>API Mocker</h1>
   <% if flash.notice %>
@@ -5,6 +14,23 @@
       <%= flash.notice %>
     </div>
   <% end %>
+
+  <%= form_with url: api_content_create_path, method: :post do |f| %>
+    <div class="row">
+      <div class="col-8">
+        <%= f.text_field :title, required: true, placeholder: 'Title', class: 'form-control' %>
+      </div>
+      <div class="col-2">
+        <%= button_tag 'Prettify', type: 'button', id: 'prettifyBtn', onclick: 'prettyPrint();', class: 'btn btn-info btn-block' %>
+      </div>
+      <div class="col-2">
+        <%= f.submit 'Create', id: 'submitBtn', class: 'btn btn-success btn-block' %>
+      </div>
+    </div>
+    <br>
+    <%= f.text_area :content, required: true, rows: 10, placeholder: 'Your JSON here', class: 'form-control' %>
+  <% end %>
+  <br>
 
   <table class="table table-striped">
     <thead>
@@ -25,3 +51,29 @@
     </tbody>
   </table>
 </div>
+
+<script>
+  document.getElementById('content').addEventListener('input', function (evt) {
+    let prettifyBtn = document.getElementById('prettifyBtn');
+    let submitBtn = document.getElementById('submitBtn');
+    if (IsJsonString(this.value)) {
+      console.log('yes')
+      prettifyBtn.disabled = false;
+      submitBtn.disabled = false;
+    } 
+    else {
+      console.log('no')
+      prettifyBtn.disabled = true;
+      submitBtn.disabled = true;
+    }
+  });
+
+  function IsJsonString(str) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
+  }
+</script>
