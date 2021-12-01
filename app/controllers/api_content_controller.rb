@@ -3,6 +3,8 @@
 require 'json'
 
 class ApiContentController < ActionController::Base
+  skip_before_action :verify_authenticity_token
+
   def show
     @api_content = ApiContent.find(params[:id])
     render json: @api_content.content
